@@ -1,39 +1,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.harshajayamanna.blog</groupId>
-    <artifactId>jakartaee8-hibernate-example</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+	<artifactId>jakartaee8-hibernate-example</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
 
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<jakarta.jakartaee-api.version>8.0.0</jakarta.jakartaee-api.version>
-		<microprofile.version>3.0</microprofile.version>
+		<microprofile.version>4.1</microprofile.version>
 		<mockito-core.version>3.1.0</mockito-core.version>
 		<junit-jupiter.version>5.5.0</junit-jupiter.version>
 	</properties>
 
-    <dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>jakarta.platform</groupId>
 			<artifactId>jakarta.jakartaee-api</artifactId>
 			<version>${jakarta.jakartaee-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.eclipse.microprofile</groupId>
-            <artifactId>microprofile</artifactId>
-            <version>${microprofile.version}</version>
-            <type>pom</type>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.eclipse.microprofile</groupId>
+			<artifactId>microprofile</artifactId>
+			<version>${microprofile.version}</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
@@ -46,28 +46,138 @@
 			<version>${mockito-core.version}</version>
 			<scope>test</scope>
 		</dependency>
-    </dependencies>
 
-    <build>
-        <finalName>jakartaee8-hibernate-example</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
-            </plugin>
-            <plugin>
-                <groupId>io.openliberty.tools</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>3.1</version>
-            </plugin>
-            <plugin>
-        		<artifactId>maven-war-plugin</artifactId>
-        		<version>3.3.2</version>
-            </plugin>
-        </plugins>
-    </build>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.1.214</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- hibernate shared lib dependencies -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<!-- until liberty fix is available : use 5.4.x version -->
+			<version>5.4.33.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- to be removed when upgrade to 5.6 is possible -->
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.1.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- force transitive ... -->
+		<!--dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+		</dependency-->
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>5.1.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.3.2.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy</artifactId>
+			<version>1.10.10</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jandex</artifactId>
+			<version>2.1.3.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<finalName>jakartaee8-hibernate-example</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.2</version>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/assembly/distribution.xml</descriptor>
+					</descriptors>
+					<formats>
+						<format>dir</format>
+					</formats>
+					<finalName>hibernate-dir</finalName>
+					<outputDirectory>
+						target/liberty/wlp/usr/servers/defaultServer</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-archive</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>io.openliberty.tools</groupId>
+				<artifactId>liberty-maven-plugin</artifactId>
+				<version>3.10.3</version>
+				<configuration>
+					<copyDependencies>
+						<dependencyGroup>
+							<location>jdbc</location>
+							<!--
+							https://mvnrepository.com/artifact/org.apache.derby/derby -->
+<!--							<dependency>-->
+<!--								<groupId>org.apache.derby</groupId>-->
+<!--								<artifactId>derby</artifactId>-->
+<!--								<version>10.14.2.0</version>-->
+<!--							</dependency>-->
+							<dependency>
+								<groupId>org.hsqldb</groupId>
+								<artifactId>hsqldb</artifactId>
+								<version>2.7.1</version>
+							</dependency>
+							<!--							<dependency>-->
+							<!--							    <groupId>org.apache.derby</groupId>-->
+							<!--							    <artifactId>derbyshared</artifactId>-->
+							<!--							    <version>10.17.1.0</version>-->
+							<!--							</dependency>-->
+						</dependencyGroup>
+					</copyDependencies>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>

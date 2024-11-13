@@ -1,82 +1,62 @@
 <server description="Liberty server">
 
-    <featureManager>
-        <feature>appClientSupport-1.0</feature>
-        <feature>beanValidation-2.0</feature>
-        <feature>cdi-2.0</feature>
-        <feature>concurrent-1.0</feature>
-        <feature>distributedMap-1.0</feature>
-<!--         <feature>ejb-3.2</feature> -->
-<!--         <feature>ejbHome-3.2</feature> -->
-<!--         <feature>ejbLite-3.2</feature> -->
-<!--         <feature>ejbPersistentTimer-3.2</feature> -->
-<!--         <feature>ejbRemote-3.2</feature> -->
-        <feature>el-3.0</feature>
-        <feature>j2eeManagement-1.1</feature>
-        <feature>jaspic-1.1</feature>
-        <feature>javaMail-1.6</feature>
-        <feature>jaxb-2.2</feature>
-        <feature>jaxrs-2.1</feature>
-        <feature>jaxrsClient-2.1</feature>
-        <feature>jaxws-2.2</feature>
-        <feature>jca-1.7</feature>
-        <feature>jcaInboundSecurity-1.0</feature>
-        <feature>jdbc-4.2</feature>
-        <feature>jms-2.0</feature>
-        <feature>jndi-1.0</feature>
-        <feature>jpaContainer-2.2</feature>
-        <feature>jsf-2.3</feature>
-        <feature>json-1.0</feature>
-        <feature>jsonb-1.0</feature>
-        <feature>jsonp-1.1</feature>
-        <feature>jsp-2.3</feature>
-        <feature>managedBeans-1.0</feature>
-        <feature>mdb-3.2</feature>
-        <feature>restConnector-2.0</feature>
-        <feature>servlet-4.0</feature>
-        <feature>wasJmsClient-2.0</feature>
-        <feature>wasJmsSecurity-1.0</feature>
-        <feature>wasJmsServer-1.0</feature>
-        <feature>websocket-1.1</feature>
-        <feature>bells-1.0</feature>
-    	<feature>appSecurity-3.0</feature>
+	<featureManager>
+		<feature>beanValidation-2.0</feature>
+		<feature>cdi-2.0</feature>
+		<feature>el-3.0</feature>
+		<feature>jaxb-2.2</feature>
+		<feature>jdbc-4.2</feature>
+		<feature>jndi-1.0</feature>
+		<feature>jsf-2.3</feature>
+		<feature>managedBeans-1.0</feature>
+		<feature>restConnector-2.0</feature>
+		<feature>servlet-4.0</feature>
+<!--		<feature>websocket-1.1</feature>-->
+		<feature>appSecurity-3.0</feature>
+		<feature>jpaContainer-2.2</feature>
+		<feature>bells-1.0</feature>
 	</featureManager>
-    
-    <keyStore />
 
-    <variable defaultValue="9081" name="default.http.port"/>
-    <variable defaultValue="9445" name="default.https.port"/>
+	<logging
+		traceSpecification="*=info:JCDI=all:com.ibm.ws.webbeans*=all:org.apache.webbeans*=all:org.jboss.weld*=all:com.ibm.ws.cdi*=all:EJBContainer=all:MetaData=all:Injection=all"
+		traceFileName="trace.log"
+		maxFileSize="100"
+		maxFiles="20"
+		traceFormat="BASIC" />
 
-    <variable name="io_openliberty_guides_system_inMaintenance" value="false"/>
+	<keyStore />
 
-    <variable name="WLP_DEBUG_REMOTE" value="y"/>
+	<variable defaultValue="9081" name="default.http.port" />
+	<variable defaultValue="9445" name="default.https.port" />
 
+	<variable name="io_openliberty_guides_system_inMaintenance" value="false" />
 
-	
-    <dataSource id="hibernatemysqldb" jndiName="jdbc/blogpostunit">
-        <jdbcDriver libraryRef="MySQLLib"/>
-        <properties databaseName="test_db" password="my-secret-pw" portNumber="55001" serverName="localhost" serverTimezone="UTC" user="root"/>
-    </dataSource>
+	<variable name="WLP_DEBUG_REMOTE" value="y" />
 
-    <library id="MySQLLib">
-        <file name="mysql-connector-java-8.0.19.jar"/>
-    </library>
+	<library id="hsql-jdbc">
+		<fileset dir="${server.config.dir}/jdbc/" includes="*.jar" />
+	</library>
 
-    <bell libraryRef="hibernate"/>
+	<dataSource id="my-datasource" jndiName="jdbc/blogpostunit">
+		<jdbcDriver libraryRef="hsql-jdbc"
+			javax.sql.ConnectionPoolDataSource="org.hsqldb.jdbc.pool.JDBCPooledDataSource" />
+		<properties URL="jdbc:hsqldb:mem:mydatabase"
+			user="sa" />
+	</dataSource>
 
-    <library id="hibernate">
-        <fileset dir="${server.config.dir}/hibernate/" includes="*.jar"/>
-    </library>
+	<library id="hibernate">
+		<fileset dir="${server.config.dir}/hibernate-dir/" includes="*.jar" />
+	</library>
 
-    <webApplication contextRoot="/" location="jakartaee8-hibernate-example.war">
-        <classloader commonLibraryRef="hibernate"/>
-    </webApplication>
+	<bell libraryRef="hibernate" />
 
-    <mpMetrics authentication="false"/>
+	<webApplication contextRoot="/" location="jakartaee8-hibernate-example.war">
+		<classloader commonLibraryRef="hibernate" />
+	</webApplication>
 
-    <quickStartSecurity userName="admin" userPassword="{xor}PjsyNjE="/>
+	<quickStartSecurity userName="admin" userPassword="{xor}PjsyNjE=" />
 
-
-    <httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
+	<httpEndpoint host="localhost" httpPort="${default.http.port}"
+		httpsPort="${default.https.port}" id="defaultHttpEndpoint" />
 
 </server>
