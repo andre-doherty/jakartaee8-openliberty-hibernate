@@ -8,21 +8,13 @@
             <includes>
                 <include>org.hibernate.common:hibernate-commons-annotations</include>
                 <include>org.hibernate:hibernate-core</include>
-                <!-- needed for hibernate 5.4.x => to be removed when upgrade to 5.6.x -->
-                <include>org.dom4j:dom4j</include>
                 <include>antlr:antlr</include>
-<!--                 <include>org.javassist:javassist</include> -->
-                <!-- check if still required include>org.slf4j:slf4j-api</include-->
                 <include>com.fasterxml:classmate</include>
                 <include>org.jboss.logging:jboss-logging</include>
 				<include>net.bytebuddy:byte-buddy</include>
 				<include>org.jboss:jandex</include>
-				<include>org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec</include>
-				<include>org.glassfish.jaxb:txw2</include>
 				<include>org.jvnet.staxex:stax-ex</include>
 				<include>org.javassist:javassist</include>
-				<include>com.sun.xml.fastinfoset:FastInfoset</include>
-				<include>com.sun.istack:istack-commons-runtime</include>
             </includes>
         </dependencySet>
     </dependencySets>

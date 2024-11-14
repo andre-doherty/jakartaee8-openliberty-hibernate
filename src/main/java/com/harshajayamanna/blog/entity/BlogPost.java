@@ -10,7 +10,9 @@ import java.util.List;
 @Table(name="blog_post")
 public class BlogPost {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_blog_post_per_generator")
+    @SequenceGenerator(name = "sq_blog_post_per_generator", sequenceName = "sq_blog_post_per_id", allocationSize = 1)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

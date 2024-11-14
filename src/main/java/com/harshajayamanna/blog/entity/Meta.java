@@ -8,7 +8,9 @@ import javax.validation.constraints.NotNull;
 @Table(name="meta")
 public class Meta {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_meta_per_generator")
+    @SequenceGenerator(name = "sq_meta_per_generator", sequenceName = "sq_meta_per_id", allocationSize = 1)
+
     @Id
     private Long id;
 

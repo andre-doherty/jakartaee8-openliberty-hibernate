@@ -17,12 +17,16 @@
 		<feature>bells-1.0</feature>
 	</featureManager>
 
+<!--	<logging-->
+<!--		traceSpecification="*=info:JCDI=all:com.ibm.ws.webbeans*=all:org.apache.webbeans*=all:org.jboss.weld*=all:com.ibm.ws.cdi*=all:EJBContainer=all:MetaData=all:Injection=all"-->
+<!--		traceFileName="trace.log"-->
+<!--		maxFileSize="100"-->
+<!--		maxFiles="20"-->
+<!--		traceFormat="BASIC" />-->
+
 	<logging
-		traceSpecification="*=info:JCDI=all:com.ibm.ws.webbeans*=all:org.apache.webbeans*=all:org.jboss.weld*=all:com.ibm.ws.cdi*=all:EJBContainer=all:MetaData=all:Injection=all"
-		traceFileName="trace.log"
-		maxFileSize="100"
-		maxFiles="20"
-		traceFormat="BASIC" />
+		traceSpecification="*=info:JPA=all:JCDI=all:com.ibm.ws.webbeans*=all:org.apache.webbeans*=all:org.jboss.weld*=all:com.ibm.ws.cdi*=all"
+		traceFormat="BASIC" consoleLogLevel="INFO" maxFileSize="100" />
 
 	<keyStore />
 
